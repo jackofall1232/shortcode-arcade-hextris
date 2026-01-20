@@ -3,7 +3,7 @@
  * Plugin Name: Shortcode Arcade Hextris
  * Plugin URI: https://github.com/jackofall1232/shortcode-arcade-hextris
  * Description: A WordPress shortcode plugin that embeds the Hextris puzzle game.
- * Version: 0.0.5
+ * Version: 0.0.7
  * Author: Shortcode Arcade
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'SACGA_HEXTRIS_VERSION', '0.0.5' );
+define( 'SACGA_HEXTRIS_VERSION', '0.0.7' );
 define( 'SACGA_HEXTRIS_GUEST_COOKIE', 'sacga_hextris_guest_id' );
 define( 'SACGA_HEXTRIS_DEBUG', false );
 
@@ -467,7 +467,7 @@ function sacga_hextris_shortcode() {
 
     ob_start();
     ?>
-    <div class="sacga-hextris">
+    <div class="sacga-hextris cyberpunk">
         <canvas id="canvas"></canvas>
         <div id="overlay" class="faded overlay"></div>
         <div id="startBtn"></div>
