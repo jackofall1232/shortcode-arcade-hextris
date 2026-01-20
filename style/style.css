@@ -530,3 +530,142 @@
     opacity: 0;
     pointer-events: none;
 }
+
+/* ==========================================================================
+   CYBERPUNK NEON OVERLAY
+   Visual styling only - no JavaScript dependencies
+   Remove .cyberpunk class to disable all effects
+   ========================================================================== */
+
+/* Cyberpunk mode - dark background with neon accents */
+.sacga-hextris.cyberpunk {
+    background-color: #0a0a0f;
+    border: 2px solid #00fff2;
+    box-shadow:
+        0 0 10px #00fff2,
+        0 0 20px rgba(0, 255, 242, 0.5),
+        0 0 40px rgba(0, 255, 242, 0.2),
+        inset 0 0 30px rgba(0, 255, 242, 0.1);
+    animation: cyberpunk-frame-pulse 6s ease-in-out infinite;
+}
+
+/* Neon glow effect on canvas - applies to all rendered shapes */
+.sacga-hextris.cyberpunk #canvas {
+    background-color: #0a0a0f;
+    filter:
+        drop-shadow(0 0 2px #ff00ff)
+        drop-shadow(0 0 4px #00fff2)
+        drop-shadow(0 0 8px rgba(255, 0, 255, 0.4));
+}
+
+/* Scanline overlay - CRT effect */
+.sacga-hextris.cyberpunk::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.15) 2px,
+        rgba(0, 0, 0, 0.15) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* Subtle vignette effect */
+.sacga-hextris.cyberpunk::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 50%,
+        rgba(0, 0, 0, 0.4) 100%
+    );
+    pointer-events: none;
+    z-index: 9998;
+}
+
+/* Frame glow pulse animation - subtle, 6 second cycle */
+@keyframes cyberpunk-frame-pulse {
+    0%, 100% {
+        box-shadow:
+            0 0 10px #00fff2,
+            0 0 20px rgba(0, 255, 242, 0.5),
+            0 0 40px rgba(0, 255, 242, 0.2),
+            inset 0 0 30px rgba(0, 255, 242, 0.1);
+    }
+    50% {
+        box-shadow:
+            0 0 15px #ff00ff,
+            0 0 30px rgba(255, 0, 255, 0.5),
+            0 0 50px rgba(255, 0, 255, 0.2),
+            inset 0 0 40px rgba(255, 0, 255, 0.1);
+    }
+}
+
+/* Cyberpunk text styling - high score and UI elements */
+.sacga-hextris.cyberpunk #highScoreInGameTextHeader {
+    color: #00fff2;
+    text-shadow: 0 0 10px #00fff2;
+}
+
+.sacga-hextris.cyberpunk #currentHighScore {
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff, 0 0 20px rgba(255, 0, 255, 0.5);
+}
+
+/* Game over screen styling */
+.sacga-hextris.cyberpunk #container {
+    color: #00fff2;
+    text-shadow: 0 0 5px #00fff2;
+}
+
+.sacga-hextris.cyberpunk .GOTitle {
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+}
+
+.sacga-hextris.cyberpunk #cScore {
+    color: #00fff2;
+    text-shadow: 0 0 15px #00fff2, 0 0 30px rgba(0, 255, 242, 0.5);
+}
+
+.sacga-hextris.cyberpunk .score {
+    color: #e0e0e0;
+}
+
+/* Help screen styling */
+.sacga-hextris.cyberpunk #helpScreen {
+    background-color: rgba(10, 10, 15, 0.95);
+    color: #00fff2;
+}
+
+.sacga-hextris.cyberpunk #inst_main_body {
+    color: #e0e0e0;
+}
+
+.sacga-hextris.cyberpunk #instructions_head {
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+}
+
+/* Button styling for cyberpunk mode */
+.sacga-hextris.cyberpunk #openSideBar,
+.sacga-hextris.cyberpunk #pauseBtn,
+.sacga-hextris.cyberpunk #restartBtn {
+    filter: brightness(0) invert(1) drop-shadow(0 0 3px #00fff2);
+}
+
+.sacga-hextris.cyberpunk #restart {
+    filter: brightness(0) invert(1) drop-shadow(0 0 5px #ff00ff);
+}
+
