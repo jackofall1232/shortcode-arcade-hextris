@@ -34,11 +34,13 @@ function sacga_hextris_allow_guests() {
  * @return string
  */
 function sacga_hextris_get_guest_id() {
+    $existing_guest_id = '';
+
     if ( ! empty( $_COOKIE[ SACGA_HEXTRIS_GUEST_COOKIE ] ) ) {
-        return sanitize_text_field( wp_unslash( $_COOKIE[ SACGA_HEXTRIS_GUEST_COOKIE ] ) );
+        $existing_guest_id = sanitize_text_field( wp_unslash( $_COOKIE[ SACGA_HEXTRIS_GUEST_COOKIE ] ) );
     }
 
-    $guest_id = wp_generate_uuid4();
+    $guest_id = $existing_guest_id ?: wp_generate_uuid4();
 
     if ( ! headers_sent() ) {
         setcookie(
@@ -53,6 +55,7 @@ function sacga_hextris_get_guest_id() {
     }
 
     $_COOKIE[ SACGA_HEXTRIS_GUEST_COOKIE ] = $guest_id;
+    set_transient( 'sacga_hextris_guest_' . $guest_id, true, DAY_IN_SECONDS );
 
     return $guest_id;
 }
@@ -64,23 +67,30 @@ function sacga_hextris_get_guest_id() {
  */
 function sacga_hextris_get_player_context() {
     if ( is_user_logged_in() ) {
+        $user_id = get_current_user_id();
+
         return array(
-            'player_id' => get_current_user_id(),
-            'is_guest'  => false,
+            'player_id'    => $user_id,
+            'player_token' => 'user-' . $user_id,
+            'is_guest'     => false,
         );
     }
 
+    $guest_id = sacga_hextris_get_guest_id();
+
     if ( ! sacga_hextris_allow_guests() ) {
         return array(
-            'player_id' => '',
-            'is_guest'  => true,
-            'blocked'   => true,
+            'player_id'    => $guest_id,
+            'player_token' => $guest_id,
+            'is_guest'     => true,
+            'blocked'      => true,
         );
     }
 
     return array(
-        'player_id' => sacga_hextris_get_guest_id(),
-        'is_guest'  => true,
+        'player_id'    => $guest_id,
+        'player_token' => $guest_id,
+        'is_guest'     => true,
     );
 }
 
@@ -379,16 +389,16 @@ function sacga_hextris_shortcode() {
     wp_enqueue_script( 'sacga-hextris-initialization' );
 
     // Pass plugin URL to JavaScript for image paths
-    wp_localize_script(
-        'sacga-hextris-initialization',
-        'sacgaHextris',
-        array(
-            'pluginUrl' => plugin_dir_url( __FILE__ ),
-            'imagesUrl' => plugin_dir_url( __FILE__ ) . 'images/',
-            'playerId'  => $player_context['player_id'],
-            'isGuest'   => $player_context['is_guest'],
-        )
+    $boot_data = array(
+        'pluginUrl'   => plugin_dir_url( __FILE__ ),
+        'imagesUrl'   => plugin_dir_url( __FILE__ ) . 'images/',
+        'playerId'    => $player_context['player_id'],
+        'playerToken' => $player_context['player_token'],
+        'isGuest'     => $player_context['is_guest'],
     );
+
+    wp_localize_script( 'sacga-hextris-save-state', 'HEXTRIS_BOOT', $boot_data );
+    wp_localize_script( 'sacga-hextris-save-state', 'sacgaHextris', $boot_data );
 
     $plugin_url = plugin_dir_url( __FILE__ );
 
