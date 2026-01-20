@@ -1,4 +1,8 @@
 (function($) {
+	if (window.hextrisInitialized) {
+		return;
+	}
+	window.hextrisInitialized = true;
 	// Safe localStorage wrapper
 	function safeGetItem(key) {
 		try {

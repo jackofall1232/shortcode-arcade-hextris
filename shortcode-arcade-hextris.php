@@ -3,7 +3,7 @@
  * Plugin Name: Shortcode Arcade Hextris
  * Plugin URI: https://github.com/jackofall1232/shortcode-arcade-hextris
  * Description: A WordPress shortcode plugin that embeds the Hextris puzzle game.
- * Version: 0.1.0
+ * Version: 0.0.3
  * Author: Shortcode Arcade
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -14,6 +14,162 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+define( 'SACGA_HEXTRIS_VERSION', '0.0.3' );
+define( 'SACGA_HEXTRIS_GUEST_COOKIE', 'sacga_hextris_guest_id' );
+
+/**
+ * Get whether guest play is allowed.
+ *
+ * @return bool
+ */
+function sacga_hextris_allow_guests() {
+    $value = get_option( 'hextris_allow_guests', true );
+
+    return (bool) $value;
+}
+
+/**
+ * Get or create a guest player ID.
+ *
+ * @return string
+ */
+function sacga_hextris_get_guest_id() {
+    if ( ! empty( $_COOKIE[ SACGA_HEXTRIS_GUEST_COOKIE ] ) ) {
+        return sanitize_text_field( wp_unslash( $_COOKIE[ SACGA_HEXTRIS_GUEST_COOKIE ] ) );
+    }
+
+    $guest_id = wp_generate_uuid4();
+
+    if ( ! headers_sent() ) {
+        setcookie(
+            SACGA_HEXTRIS_GUEST_COOKIE,
+            $guest_id,
+            time() + YEAR_IN_SECONDS,
+            COOKIEPATH,
+            COOKIE_DOMAIN,
+            is_ssl(),
+            true
+        );
+    }
+
+    $_COOKIE[ SACGA_HEXTRIS_GUEST_COOKIE ] = $guest_id;
+
+    return $guest_id;
+}
+
+/**
+ * Get the player context for the current visitor.
+ *
+ * @return array
+ */
+function sacga_hextris_get_player_context() {
+    if ( is_user_logged_in() ) {
+        return array(
+            'player_id' => get_current_user_id(),
+            'is_guest'  => false,
+        );
+    }
+
+    if ( ! sacga_hextris_allow_guests() ) {
+        return array(
+            'player_id' => '',
+            'is_guest'  => true,
+            'blocked'   => true,
+        );
+    }
+
+    return array(
+        'player_id' => sacga_hextris_get_guest_id(),
+        'is_guest'  => true,
+    );
+}
+
+/**
+ * Register admin settings.
+ */
+function sacga_hextris_register_settings() {
+    register_setting(
+        'sacga_hextris_settings',
+        'hextris_allow_guests',
+        array(
+            'type'              => 'boolean',
+            'sanitize_callback' => 'sacga_hextris_sanitize_boolean',
+            'default'           => true,
+        )
+    );
+
+    add_settings_section(
+        'sacga_hextris_general',
+        '',
+        '__return_false',
+        'sacga_hextris_settings'
+    );
+
+    add_settings_field(
+        'hextris_allow_guests',
+        __( 'Allow guests to play', 'shortcode-arcade-hextris' ),
+        'sacga_hextris_render_allow_guests_field',
+        'sacga_hextris_settings',
+        'sacga_hextris_general'
+    );
+}
+add_action( 'admin_init', 'sacga_hextris_register_settings' );
+
+/**
+ * Sanitize boolean settings.
+ *
+ * @param mixed $value Value to sanitize.
+ * @return bool
+ */
+function sacga_hextris_sanitize_boolean( $value ) {
+    return (bool) $value;
+}
+
+/**
+ * Render the allow guests field.
+ */
+function sacga_hextris_render_allow_guests_field() {
+    $value = sacga_hextris_allow_guests();
+    ?>
+    <label for="hextris_allow_guests">
+        <input type="checkbox" id="hextris_allow_guests" name="hextris_allow_guests" value="1" <?php checked( $value ); ?> />
+        <?php esc_html_e( 'Enable guest play (no login required).', 'shortcode-arcade-hextris' ); ?>
+    </label>
+    <?php
+}
+
+/**
+ * Add the settings page.
+ */
+function sacga_hextris_add_settings_page() {
+    add_options_page(
+        __( 'Hextris Settings', 'shortcode-arcade-hextris' ),
+        __( 'Hextris', 'shortcode-arcade-hextris' ),
+        'manage_options',
+        'sacga-hextris',
+        'sacga_hextris_render_settings_page'
+    );
+}
+add_action( 'admin_menu', 'sacga_hextris_add_settings_page' );
+
+/**
+ * Render the settings page.
+ */
+function sacga_hextris_render_settings_page() {
+    ?>
+    <div class="wrap">
+        <h1><?php esc_html_e( 'Hextris Settings', 'shortcode-arcade-hextris' ); ?></h1>
+        <form action="options.php" method="post">
+            <?php
+            settings_fields( 'sacga_hextris_settings' );
+            do_settings_sections( 'sacga_hextris_settings' );
+            submit_button();
+            ?>
+        </form>
+        <p><?php echo esc_html( sprintf( __( 'Plugin version: %s', 'shortcode-arcade-hextris' ), SACGA_HEXTRIS_VERSION ) ); ?></p>
+    </div>
+    <?php
+}
 /**
  * Register all Hextris assets (CSS and JS).
  */
@@ -25,21 +181,21 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-fontawesome',
         $plugin_url . 'style/fa/css/font-awesome.min.css',
         array(),
-        '0.1.0'
+        SACGA_HEXTRIS_VERSION
     );
 
     wp_register_style(
         'sacga-hextris-rrssb',
         $plugin_url . 'style/rrssb.css',
         array(),
-        '0.1.0'
+        SACGA_HEXTRIS_VERSION
     );
 
     wp_register_style(
         'sacga-hextris-main',
         $plugin_url . 'style/style.css',
         array( 'sacga-hextris-fontawesome', 'sacga-hextris-rrssb' ),
-        '0.1.0'
+        SACGA_HEXTRIS_VERSION
     );
 
     // Register Vendor JS
@@ -47,7 +203,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-hammer',
         $plugin_url . 'vendor/hammer.min.js',
         array(),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -55,7 +211,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-cookie',
         $plugin_url . 'vendor/js.cookie.js',
         array(),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -63,7 +219,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-jsonfn',
         $plugin_url . 'vendor/jsonfn.min.js',
         array(),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -71,7 +227,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-keypress',
         $plugin_url . 'vendor/keypress.min.js',
         array(),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -79,7 +235,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-sweetalert',
         $plugin_url . 'vendor/sweet-alert.min.js',
         array(),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -87,7 +243,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-rrssb',
         $plugin_url . 'vendor/rrssb.min.js',
         array( 'jquery' ),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -96,7 +252,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-save-state',
         $plugin_url . 'js/save-state.js',
         array( 'sacga-hextris-cookie', 'sacga-hextris-jsonfn' ),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -104,7 +260,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-view',
         $plugin_url . 'js/view.js',
         array( 'sacga-hextris-save-state' ),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -112,7 +268,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-wavegen',
         $plugin_url . 'js/wavegen.js',
         array( 'sacga-hextris-view' ),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -120,7 +276,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-math',
         $plugin_url . 'js/math.js',
         array( 'sacga-hextris-wavegen' ),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -128,7 +284,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-block',
         $plugin_url . 'js/Block.js',
         array( 'sacga-hextris-math' ),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -136,7 +292,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-hex',
         $plugin_url . 'js/Hex.js',
         array( 'sacga-hextris-block' ),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -144,7 +300,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-text',
         $plugin_url . 'js/Text.js',
         array( 'sacga-hextris-hex' ),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -152,7 +308,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-combotimer',
         $plugin_url . 'js/comboTimer.js',
         array( 'sacga-hextris-text' ),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -160,7 +316,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-checking',
         $plugin_url . 'js/checking.js',
         array( 'sacga-hextris-combotimer' ),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -168,7 +324,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-update',
         $plugin_url . 'js/update.js',
         array( 'sacga-hextris-checking' ),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -176,7 +332,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-render',
         $plugin_url . 'js/render.js',
         array( 'sacga-hextris-update' ),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -184,7 +340,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-input',
         $plugin_url . 'js/input.js',
         array( 'sacga-hextris-render', 'sacga-hextris-hammer', 'sacga-hextris-keypress' ),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -192,7 +348,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-main',
         $plugin_url . 'js/main.js',
         array( 'sacga-hextris-input', 'jquery' ),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 
@@ -200,7 +356,7 @@ function sacga_hextris_register_assets() {
         'sacga-hextris-initialization',
         $plugin_url . 'js/initialization.js',
         array( 'sacga-hextris-main', 'sacga-hextris-sweetalert', 'sacga-hextris-rrssb' ),
-        '0.1.0',
+        SACGA_HEXTRIS_VERSION,
         true
     );
 }
@@ -212,6 +368,12 @@ add_action( 'wp_enqueue_scripts', 'sacga_hextris_register_assets' );
  * @return string The Hextris game HTML.
  */
 function sacga_hextris_shortcode() {
+    $player_context = sacga_hextris_get_player_context();
+
+    if ( isset( $player_context['blocked'] ) && $player_context['blocked'] ) {
+        return '<p>' . esc_html__( 'Hextris is available for logged-in users only.', 'shortcode-arcade-hextris' ) . '</p>';
+    }
+
     // Enqueue assets only when shortcode is used
     wp_enqueue_style( 'sacga-hextris-main' );
     wp_enqueue_script( 'sacga-hextris-initialization' );
@@ -223,6 +385,8 @@ function sacga_hextris_shortcode() {
         array(
             'pluginUrl' => plugin_dir_url( __FILE__ ),
             'imagesUrl' => plugin_dir_url( __FILE__ ) . 'images/',
+            'playerId'  => $player_context['player_id'],
+            'isGuest'   => $player_context['is_guest'],
         )
     );
 
