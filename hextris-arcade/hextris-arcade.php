@@ -1,19 +1,18 @@
 <?php
-/**
- * Plugin Name: Hextris Arcade
- * Plugin URI: https://github.com/hextris/hextris
- * Description: A fast-paced puzzle game where players rotate a hexagon to match falling colored blocks. Use the [hextris] shortcode or Gutenberg block to embed the game.
- * Version: 1.0.0
- * Author: Hextris Team
- * Author URI: https://hextris.io
- * License: GPL-2.0-or-later
- * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: hextris-arcade
- * Domain Path: /languages
- * Requires at least: 5.8
- * Requires PHP: 7.4
- * Tested up to: 6.4
- */
+/*
+Plugin Name: Hextris Arcade
+Plugin URI: https://github.com/hextris/hextris
+Description: A fast-paced puzzle game where players rotate a hexagon to match falling colored blocks. Use the [hextris] shortcode or Gutenberg block to embed the game.
+Version: 1.0.0
+Author: Hextris Team
+Author URI: https://hextris.io
+License: GPL-2.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: hextris-arcade
+Domain Path: /languages
+Requires at least: 5.8
+Requires PHP: 7.4
+*/
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
