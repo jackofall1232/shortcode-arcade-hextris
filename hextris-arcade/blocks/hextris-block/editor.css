@@ -1,0 +1,21 @@
+/**
+ * Hextris Block Editor Styles
+ */
+
+.hextris-block-editor-preview {
+    padding: 0;
+}
+
+.hextris-block-preview {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.hextris-block-preview:hover {
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Block sidebar icon */
+.wp-block-hextris-arcade-game .block-editor-block-icon {
+    color: #3498db;
+}
