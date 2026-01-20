@@ -1,8 +1,9 @@
 (function($) {
 	// Helper to get image URL
 	function getImageUrl(filename) {
-		if (window.sacgaHextris && window.sacgaHextris.imagesUrl) {
-			return window.sacgaHextris.imagesUrl + filename;
+		var bootData = window.HEXTRIS_BOOT || window.sacgaHextris;
+		if (bootData && bootData.imagesUrl) {
+			return bootData.imagesUrl + filename;
 		}
 		return './images/' + filename;
 	}

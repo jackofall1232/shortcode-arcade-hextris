@@ -1,4 +1,16 @@
 (function($) {
+	var bootData = window.HEXTRIS_BOOT || window.sacgaHextris || {};
+	window.HEXTRIS_BOOT = $.extend({
+		playerToken: '',
+		isGuest: true,
+		pluginUrl: '',
+		imagesUrl: ''
+	}, bootData);
+
+	if (!window.sacgaHextris) {
+		window.sacgaHextris = window.HEXTRIS_BOOT;
+	}
+
 	if (window.hextrisInitialized) {
 		return;
 	}
