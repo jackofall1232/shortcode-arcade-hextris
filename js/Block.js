@@ -1,4 +1,14 @@
-function Block(fallingLane, color, iter, distFromHex, settled) {
+(function($) {
+	// Safe localStorage wrapper
+	function safeSetItem(key, value) {
+		try {
+			localStorage.setItem(key, value);
+		} catch (e) {
+			// Storage not available
+		}
+	}
+
+	window.Block = function Block(fallingLane, color, iter, distFromHex, settled) {
 	// whether or not a block is rested on the center hex or another block
 	this.settled = (settled === undefined) ? 0 : 1;
 	this.height = settings.blockHeight;
@@ -52,7 +62,7 @@ function Block(fallingLane, color, iter, distFromHex, settled) {
 				this.opacity = 0;
 				this.deleted = 2;
 				if (gameState == 1 || gameState==0) {
-					localStorage.setItem("saveState", exportSaveState());
+					safeSetItem("saveState", exportSaveState());
 				}
 			}
 		}
@@ -148,7 +158,7 @@ function Block(fallingLane, color, iter, distFromHex, settled) {
 		if (this.tint) {
 			if (this.opacity < 1) {
 				if (gameState == 1 || gameState==0) {
-					localStorage.setItem("saveState", exportSaveState());
+					safeSetItem("saveState", exportSaveState());
 				}
 
 				this.iter = 2.25;
@@ -173,9 +183,9 @@ function Block(fallingLane, color, iter, distFromHex, settled) {
 
 		ctx.globalAlpha = 1;
 	};
-}
+};
 
-function findCenterOfBlocks(arr) {
+window.findCenterOfBlocks = function(arr) {
 	var avgDFH = 0;
 	var avgAngle = 0;
 	for (var i = 0; i < arr.length; i++) {
@@ -184,7 +194,7 @@ function findCenterOfBlocks(arr) {
 		while (ang < 0) {
 			ang += 360;
 		}
-		
+
 		avgAngle += ang % 360;
 	}
 
@@ -195,4 +205,6 @@ function findCenterOfBlocks(arr) {
 		x:trueCanvas.width/2 + Math.cos(avgAngle * (Math.PI / 180)) * avgDFH,
 		y:trueCanvas.height/2 + Math.sin(avgAngle * (Math.PI / 180)) * avgDFH
 	};
-}
+};
+
+})(jQuery);

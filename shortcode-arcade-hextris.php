@@ -216,6 +216,16 @@ function sacga_hextris_shortcode() {
     wp_enqueue_style( 'sacga-hextris-main' );
     wp_enqueue_script( 'sacga-hextris-initialization' );
 
+    // Pass plugin URL to JavaScript for image paths
+    wp_localize_script(
+        'sacga-hextris-main',
+        'sacgaHextris',
+        array(
+            'pluginUrl' => plugin_dir_url( __FILE__ ),
+            'imagesUrl' => plugin_dir_url( __FILE__ ) . 'images/',
+        )
+    );
+
     $plugin_url = plugin_dir_url( __FILE__ );
 
     ob_start();
