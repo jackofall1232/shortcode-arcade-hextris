@@ -7,9 +7,15 @@
     height: 600px;
     min-height: 400px;
     overflow: hidden;
-    color: #ecf0f1;
+    color: #e6f7ff;
     font-family: 'Exo', sans-serif;
-    background-color: #ecf0f1;
+    background-color: #06060c;
+    background-image:
+        radial-gradient(circle at 15% 20%, rgba(35, 255, 218, 0.18), transparent 45%),
+        radial-gradient(circle at 80% 0%, rgba(255, 0, 199, 0.22), transparent 40%),
+        linear-gradient(135deg, rgba(12, 18, 36, 0.9) 0%, rgba(5, 5, 10, 0.95) 50%, rgba(18, 5, 24, 0.9) 100%);
+    border: 1px solid rgba(35, 255, 218, 0.3);
+    box-shadow: 0 0 25px rgba(35, 255, 218, 0.2), inset 0 0 35px rgba(255, 0, 199, 0.15);
 }
 
 .sacga-hextris * {
@@ -35,7 +41,7 @@
 }
 
 .sacga-hextris #container {
-    color: #232323;
+    color: #e6f7ff;
     position: absolute;
     left: 50%;
     top: calc(50%);
@@ -50,7 +56,8 @@
 
 .sacga-hextris .tweet {
     font-size: 2rem;
-    color: #4099FF;
+    color: #23ffda;
+    text-shadow: 0 0 8px rgba(35, 255, 218, 0.8);
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
@@ -60,7 +67,8 @@
 }
 
 .sacga-hextris a {
-    color: #232323;
+    color: #23ffda;
+    text-shadow: 0 0 6px rgba(35, 255, 218, 0.6);
 }
 
 .sacga-hextris .navbar {
@@ -77,11 +85,11 @@
 }
 
 .sacga-hextris #title {
-    color: #ecf0f1;
+    color: #f7f8ff;
     font-size: 6vmin;
     z-index: 99;
     margin-top: 20px;
-    color: #2c3e50;
+    text-shadow: 0 0 12px rgba(255, 0, 199, 0.55), 0 0 24px rgba(35, 255, 218, 0.45);
 }
 
 .sacga-hextris #score {
@@ -100,9 +108,10 @@
 }
 
 .sacga-hextris button {
-    color: #ecf0f1;
-    background-color: rgba(0,0,0,0);
+    color: #e6f7ff;
+    background-color: rgba(8, 12, 24, 0.45);
     border: 0;
+    text-shadow: 0 0 6px rgba(35, 255, 218, 0.55);
 }
 
 .sacga-hextris button:focus {
@@ -116,7 +125,8 @@
     height: 72px;
     margin-left: 11px;
     z-index: 3003;
-    color: #232323;
+    color: #23ffda;
+    text-shadow: 0 0 10px rgba(35, 255, 218, 0.8);
     cursor: pointer;
     top: 0;
     left: 0;
@@ -130,7 +140,8 @@
     height: 72px;
     margin-right: 11px;
     z-index: 99;
-    color: #232323;
+    color: #ff00c7;
+    text-shadow: 0 0 10px rgba(255, 0, 199, 0.8);
     cursor: pointer;
     right: 0;
     bottom: 0;
@@ -144,7 +155,8 @@
     height: 72px;
     margin-left: 11px;
     z-index: 99;
-    color: #232323;
+    color: #23ffda;
+    text-shadow: 0 0 10px rgba(35, 255, 218, 0.8);
     cursor: pointer;
     bottom: 0;
     left: 0;
@@ -171,8 +183,9 @@
     font-size: 15px;
     text-align: center;
     display: none;
-    color: #232323;
-    background-color: rgba(236,240,241,1);
+    color: #e6f7ff;
+    background-color: rgba(6, 6, 12, 0.96);
+    box-shadow: inset 0 0 30px rgba(35, 255, 218, 0.2);
 }
 
 .sacga-hextris #colorBlindBtn {
@@ -184,7 +197,8 @@
     top: 65%;
     font-size: 15px;
     text-align: center;
-    color: #232323;
+    color: #23ffda;
+    text-shadow: 0 0 8px rgba(35, 255, 218, 0.8);
     cursor: pointer;
 }
 
@@ -208,8 +222,8 @@
 
 .sacga-hextris #inst_main_body > hr {
     width: 100%;
-    color: #232323;
-    background-color: #232323;
+    color: rgba(35, 255, 218, 0.6);
+    background-color: rgba(35, 255, 218, 0.6);
     height: 1px;
     border: 0;
 }
@@ -225,7 +239,7 @@
 }
 
 .sacga-hextris #highScoreInGameTextHeader {
-    color: #bdc3c7;
+    color: #8ddcff;
     width: 100%;
 }
 
@@ -239,7 +253,8 @@
 }
 
 .sacga-hextris #currentHighScore {
-    color: #2c3e50;
+    color: #f7f8ff;
+    text-shadow: 0 0 10px rgba(255, 0, 199, 0.55), 0 0 18px rgba(35, 255, 218, 0.45);
     width: 100%;
     margin-top: -5px;
     font-size: 2em;
@@ -289,7 +304,7 @@
     margin-left: -50%;
     margin-top: -10%;
     z-index: 3000;
-    color: #232323;
+    color: #e6f7ff;
     text-align: center;
 }
 
@@ -391,7 +406,10 @@
     right: 0;
     height: 100%;
     width: 100%;
-    background-color: #ecf0f1;
+    background-color: #0a0c18;
+    background-image:
+        radial-gradient(circle at 50% 20%, rgba(35, 255, 218, 0.2), transparent 45%),
+        radial-gradient(circle at 20% 80%, rgba(255, 0, 199, 0.16), transparent 50%);
     z-index: 0;
 }
 
@@ -465,6 +483,7 @@
 .sacga-hextris .GOTitle {
     font-weight: bold;
     font-size: 24.2000px;
+    text-shadow: 0 0 8px rgba(255, 0, 199, 0.7);
 }
 
 .sacga-hextris .scoreNum {
@@ -476,6 +495,7 @@
     font-weight: light;
     margin-bottom: 5px;
     margin-top: -10px;
+    text-shadow: 0 0 16px rgba(35, 255, 218, 0.5);
 }
 
 .sacga-hextris #highScoresTitle {
