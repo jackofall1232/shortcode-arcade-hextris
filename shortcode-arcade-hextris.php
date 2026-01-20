@@ -3,7 +3,7 @@
  * Plugin Name: Shortcode Arcade Hextris
  * Plugin URI: https://github.com/jackofall1232/shortcode-arcade-hextris
  * Description: A WordPress shortcode plugin that embeds the Hextris puzzle game.
- * Version: 0.0.4
+ * Version: 0.0.5
  * Author: Shortcode Arcade
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -14,9 +14,53 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'SACGA_HEXTRIS_VERSION', '0.0.4' );
+define( 'SACGA_HEXTRIS_VERSION', '0.0.5' );
 define( 'SACGA_HEXTRIS_GUEST_COOKIE', 'sacga_hextris_guest_id' );
 define( 'SACGA_HEXTRIS_DEBUG', false );
+
+/**
+ * Detect if the current page needs Hextris assets.
+ *
+ * This runs during wp_enqueue_scripts (BEFORE page caching) to ensure
+ * assets are enqueued early enough to survive page caching.
+ *
+ * @return bool
+ */
+function sacga_hextris_page_needs_assets() {
+    global $post;
+
+    // Allow force-loading via filter (for page builders, widgets, etc.)
+    if ( apply_filters( 'sacga_hextris_force_load_assets', false ) ) {
+        return true;
+    }
+
+    // Check if we're on a singular page/post with the shortcode
+    if ( is_singular() && is_a( $post, 'WP_Post' ) ) {
+        if ( has_shortcode( $post->post_content, 'sacga_hextris' ) ) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Get the boot data for JavaScript initialization.
+ *
+ * @return array
+ */
+function sacga_hextris_get_boot_data() {
+    $player_context = sacga_hextris_get_player_context();
+
+    return array(
+        'pluginUrl'   => plugin_dir_url( __FILE__ ),
+        'imagesUrl'   => plugin_dir_url( __FILE__ ) . 'images/',
+        'playerId'    => $player_context['player_id'],
+        'playerToken' => $player_context['player_token'],
+        'isGuest'     => $player_context['is_guest'],
+        'debug'       => SACGA_HEXTRIS_DEBUG,
+    );
+}
 
 /**
  * Get whether guest play is allowed.
@@ -371,40 +415,53 @@ function sacga_hextris_register_assets() {
         true
     );
 }
-add_action( 'wp_enqueue_scripts', 'sacga_hextris_register_assets' );
+
+/**
+ * Enqueue Hextris assets if the page needs them.
+ *
+ * CRITICAL: This runs during wp_enqueue_scripts, BEFORE page caching captures
+ * the content. This ensures scripts are included even when pages are cached.
+ *
+ * Previous approach (enqueuing in shortcode callback) failed because:
+ * - Shortcode runs during the_content filter (after wp_enqueue_scripts)
+ * - Page caching captures HTML but doesn't replay wp_enqueue_script() calls
+ * - Result: cached pages had HTML container but no <script> tags
+ */
+function sacga_hextris_maybe_enqueue_assets() {
+    // Always register assets first
+    sacga_hextris_register_assets();
+
+    // Only enqueue if this page needs them
+    if ( ! sacga_hextris_page_needs_assets() ) {
+        return;
+    }
+
+    // Enqueue styles and scripts
+    wp_enqueue_style( 'sacga-hextris-main' );
+    wp_enqueue_script( 'sacga-hextris-initialization' );
+
+    // Localize boot data now (while we're in wp_enqueue_scripts)
+    $boot_data = sacga_hextris_get_boot_data();
+    wp_localize_script( 'sacga-hextris-save-state', 'HEXTRIS_BOOT', $boot_data );
+    wp_localize_script( 'sacga-hextris-save-state', 'sacgaHextris', $boot_data );
+}
+add_action( 'wp_enqueue_scripts', 'sacga_hextris_maybe_enqueue_assets' );
 
 /**
  * Shortcode callback for [sacga_hextris].
  *
+ * This callback ONLY outputs HTML markup. Asset enqueuing is handled earlier
+ * by sacga_hextris_maybe_enqueue_assets() during wp_enqueue_scripts hook.
+ * This separation ensures assets load even when pages are cached.
+ *
  * @return string The Hextris game HTML.
  */
 function sacga_hextris_shortcode() {
-    if ( ! wp_style_is( 'sacga-hextris-main', 'registered' ) ) {
-        sacga_hextris_register_assets();
-    }
-
     $player_context = sacga_hextris_get_player_context();
 
     if ( isset( $player_context['blocked'] ) && $player_context['blocked'] ) {
         return '<p>' . esc_html__( 'Hextris is available for logged-in users only.', 'shortcode-arcade-hextris' ) . '</p>';
     }
-
-    // Enqueue assets only when shortcode is used
-    wp_enqueue_style( 'sacga-hextris-main' );
-    wp_enqueue_script( 'sacga-hextris-initialization' );
-
-    // Pass plugin URL to JavaScript for image paths
-    $boot_data = array(
-        'pluginUrl'   => plugin_dir_url( __FILE__ ),
-        'imagesUrl'   => plugin_dir_url( __FILE__ ) . 'images/',
-        'playerId'    => $player_context['player_id'],
-        'playerToken' => $player_context['player_token'],
-        'isGuest'     => $player_context['is_guest'],
-        'debug'       => SACGA_HEXTRIS_DEBUG,
-    );
-
-    wp_localize_script( 'sacga-hextris-save-state', 'HEXTRIS_BOOT', $boot_data );
-    wp_localize_script( 'sacga-hextris-save-state', 'sacgaHextris', $boot_data );
 
     $plugin_url = plugin_dir_url( __FILE__ );
 
