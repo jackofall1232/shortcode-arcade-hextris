@@ -4,7 +4,8 @@
 		playerToken: '',
 		isGuest: true,
 		pluginUrl: '',
-		imagesUrl: ''
+		imagesUrl: '',
+		debug: false
 	}, bootData);
 
 	if (!window.sacgaHextris) {
@@ -15,6 +16,11 @@
 		return;
 	}
 	window.hextrisInitialized = true;
+
+	if (window.HEXTRIS_BOOT.debug && window.console) {
+		var playerMode = window.HEXTRIS_BOOT.isGuest ? 'guest' : 'logged-in';
+		console.log('Hextris assets loaded (' + playerMode + ').');
+	}
 	// Safe localStorage wrapper
 	function safeGetItem(key) {
 		try {

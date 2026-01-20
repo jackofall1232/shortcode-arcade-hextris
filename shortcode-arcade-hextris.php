@@ -3,7 +3,7 @@
  * Plugin Name: Shortcode Arcade Hextris
  * Plugin URI: https://github.com/jackofall1232/shortcode-arcade-hextris
  * Description: A WordPress shortcode plugin that embeds the Hextris puzzle game.
- * Version: 0.0.3
+ * Version: 0.0.4
  * Author: Shortcode Arcade
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -14,8 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'SACGA_HEXTRIS_VERSION', '0.0.3' );
+define( 'SACGA_HEXTRIS_VERSION', '0.0.4' );
 define( 'SACGA_HEXTRIS_GUEST_COOKIE', 'sacga_hextris_guest_id' );
+define( 'SACGA_HEXTRIS_DEBUG', false );
 
 /**
  * Get whether guest play is allowed.
@@ -378,6 +379,10 @@ add_action( 'wp_enqueue_scripts', 'sacga_hextris_register_assets' );
  * @return string The Hextris game HTML.
  */
 function sacga_hextris_shortcode() {
+    if ( ! wp_style_is( 'sacga-hextris-main', 'registered' ) ) {
+        sacga_hextris_register_assets();
+    }
+
     $player_context = sacga_hextris_get_player_context();
 
     if ( isset( $player_context['blocked'] ) && $player_context['blocked'] ) {
@@ -395,6 +400,7 @@ function sacga_hextris_shortcode() {
         'playerId'    => $player_context['player_id'],
         'playerToken' => $player_context['player_token'],
         'isGuest'     => $player_context['is_guest'],
+        'debug'       => SACGA_HEXTRIS_DEBUG,
     );
 
     wp_localize_script( 'sacga-hextris-save-state', 'HEXTRIS_BOOT', $boot_data );
