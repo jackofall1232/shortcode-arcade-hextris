@@ -1,5 +1,7 @@
-$(document).ready(function() {
-	initialize();
+$(window).on('load', function() {
+	setTimeout(function() {
+		initialize();
+	}, 0);
 });
 function initialize(a) {
 	window.rush = 1;

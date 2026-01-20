@@ -1,6 +1,12 @@
 function scaleCanvas() {
-	canvas.width = $(window).width();
-	canvas.height = $(window).height();
+	var $container = $(canvas).closest('.sacga-hextris');
+	if ($container.length && $container.width() > 0 && $container.height() > 0) {
+		canvas.width = $container.width();
+		canvas.height = $container.height();
+	} else {
+		canvas.width = $(window).width();
+		canvas.height = $(window).height();
+	}
 
 	if (canvas.height > canvas.width) {
 		settings.scale = (canvas.width / 800) * settings.baseScale;
