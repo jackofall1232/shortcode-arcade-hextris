@@ -1,0 +1,173 @@
+/**
+ * Hextris Arcade - Responsive Styles
+ */
+
+/* Tablet and smaller */
+@media only screen and (max-width: 768px) {
+    .hextris-container .hextris-btn {
+        width: 60px;
+        height: 60px;
+    }
+
+    .hextris-container .hextris-help-body {
+        width: calc(100% - 40px);
+        max-width: none;
+        font-size: 1em;
+    }
+
+    .hextris-container .hextris-centered-header {
+        font-size: 2rem;
+        line-height: 0.6rem;
+    }
+
+    .hextris-container .hextris-centered-subheader {
+        font-size: 1rem;
+    }
+}
+
+/* Mobile devices */
+@media only screen and (max-width: 480px) {
+    .hextris-container .hextris-btn {
+        width: 50px;
+        height: 50px;
+    }
+
+    .hextris-container .hextris-help-btn {
+        top: 5px;
+        left: 8px;
+    }
+
+    .hextris-container .hextris-pause-btn {
+        bottom: 5px;
+        right: 8px;
+    }
+
+    .hextris-container .hextris-restart-btn {
+        bottom: 5px;
+        left: 8px;
+    }
+
+    .hextris-container .hextris-help-body {
+        padding: 15px;
+        font-size: 0.9em;
+    }
+
+    .hextris-container .hextris-help-header {
+        font-size: 1.3em;
+    }
+
+    .hextris-container .hextris-high-score-display {
+        width: 150px;
+    }
+
+    .hextris-container .hextris-high-score-label {
+        font-size: 0.8em;
+    }
+
+    .hextris-container .hextris-high-score-value {
+        font-size: 1.5em;
+    }
+
+    .hextris-container .hextris-game-over-title {
+        font-size: 1.2em;
+    }
+
+    .hextris-container .hextris-final-score {
+        font-size: 2.5em;
+    }
+
+    .hextris-container .hextris-high-scores-title {
+        font-size: 1em;
+    }
+
+    .hextris-container .hextris-restart-game-btn {
+        width: 48px;
+        height: 48px;
+    }
+
+    .hextris-container .hextris-leaderboard {
+        display: none;
+    }
+
+    /* Show mobile instructions, hide desktop */
+    .hextris-container .hextris-desktop-only {
+        display: none;
+    }
+
+    .hextris-container .hextris-mobile-only {
+        display: block;
+    }
+}
+
+/* Touch device detection via media query */
+@media (hover: none) and (pointer: coarse) {
+    .hextris-container .hextris-desktop-only {
+        display: none;
+    }
+
+    .hextris-container .hextris-mobile-only {
+        display: block;
+    }
+}
+
+/* Landscape orientation on mobile */
+@media only screen and (max-height: 500px) and (orientation: landscape) {
+    .hextris-container .hextris-btn {
+        width: 45px;
+        height: 45px;
+    }
+
+    .hextris-container .hextris-high-score-display {
+        top: 5px;
+    }
+
+    .hextris-container .hextris-high-score-label {
+        font-size: 0.7em;
+    }
+
+    .hextris-container .hextris-high-score-value {
+        font-size: 1.2em;
+    }
+
+    .hextris-container .hextris-help-body {
+        padding: 10px;
+        font-size: 0.85em;
+    }
+
+    .hextris-container .hextris-help-body p {
+        margin-bottom: 8px;
+    }
+}
+
+/* High DPI / Retina displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .hextris-container .hextris-btn {
+        image-rendering: -webkit-optimize-contrast;
+    }
+}
+
+/* Print styles - hide the game */
+@media print {
+    .hextris-wrapper {
+        display: none;
+    }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .hextris-container,
+    .hextris-container * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* Dark mode preference (if not using custom theme) */
+@media (prefers-color-scheme: dark) {
+    .hextris-container:not([class*="hextris-theme-"]) {
+        /* Optionally auto-apply dark theme based on system preference */
+        /* Uncomment to enable:
+        background-color: #1a1a2e;
+        */
+    }
+}
