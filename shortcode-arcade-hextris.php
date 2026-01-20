@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Plugin Name: Shortcode Arcade Hextris
  * Plugin URI: https://github.com/jackofall1232/shortcode-arcade-hextris
  * Description: A WordPress shortcode plugin that embeds the Hextris puzzle game.

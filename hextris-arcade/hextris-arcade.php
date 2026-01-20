@@ -1,17 +1,9 @@
 <?php
 /**
- * Plugin Name:       Hextris Arcade
- * Plugin URI:        https://github.com/hextris/hextris
- * Description:       A fast-paced puzzle game where players rotate a hexagon to match falling colored blocks.
- * Version:           1.0.0
- * Author:            Hextris Team
- * Author URI:        https://hextris.io
- * License:           GPL-2.0-or-later
- * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       hextris-arcade
- * Domain Path:       /languages
- * Requires at least: 5.8
- * Requires PHP:      7.4
+ * Hextris Arcade loader.
+ *
+ * This file is kept as an internal loader for bundled assets and should not be
+ * treated as a standalone WordPress plugin entry file.
  */
 
 // If this file is called directly, abort.
