@@ -1,6 +1,6 @@
 /* Scoped Hextris Styles - all styles contained within .sacga-hextris */
 
-/* Container setup */
+/* Container setup - Enhanced 3D Cyberpunk */
 .sacga-hextris {
     position: relative;
     width: 100%;
@@ -13,9 +13,16 @@
     background-image:
         radial-gradient(circle at 15% 20%, rgba(35, 255, 218, 0.18), transparent 45%),
         radial-gradient(circle at 80% 0%, rgba(255, 0, 199, 0.22), transparent 40%),
+        radial-gradient(circle at 50% 100%, rgba(123, 46, 255, 0.15), transparent 50%),
         linear-gradient(135deg, rgba(12, 18, 36, 0.9) 0%, rgba(5, 5, 10, 0.95) 50%, rgba(18, 5, 24, 0.9) 100%);
-    border: 1px solid rgba(35, 255, 218, 0.3);
-    box-shadow: 0 0 25px rgba(35, 255, 218, 0.2), inset 0 0 35px rgba(255, 0, 199, 0.15);
+    border: 2px solid rgba(35, 255, 218, 0.4);
+    box-shadow:
+        0 0 30px rgba(35, 255, 218, 0.3),
+        0 0 60px rgba(255, 0, 199, 0.2),
+        inset 0 0 50px rgba(255, 0, 199, 0.15),
+        inset 0 0 100px rgba(35, 255, 218, 0.1);
+    transform-style: preserve-3d;
+    perspective: 1000px;
 }
 
 .sacga-hextris * {
@@ -130,6 +137,14 @@
     cursor: pointer;
     top: 0;
     left: 0;
+    filter: drop-shadow(0 0 15px rgba(35, 255, 218, 0.6));
+    transition: all 0.3s ease;
+    transform: translateZ(20px);
+}
+
+.sacga-hextris #openSideBar:hover {
+    filter: drop-shadow(0 0 25px rgba(35, 255, 218, 0.9));
+    transform: translateZ(30px) scale(1.1);
 }
 
 .sacga-hextris #pauseBtn {
@@ -145,6 +160,14 @@
     cursor: pointer;
     right: 0;
     bottom: 0;
+    filter: drop-shadow(0 0 15px rgba(255, 0, 199, 0.6));
+    transition: all 0.3s ease;
+    transform: translateZ(20px);
+}
+
+.sacga-hextris #pauseBtn:hover {
+    filter: drop-shadow(0 0 25px rgba(255, 0, 199, 0.9));
+    transform: translateZ(30px) scale(1.1);
 }
 
 .sacga-hextris #restartBtn {
@@ -160,6 +183,14 @@
     cursor: pointer;
     bottom: 0;
     left: 0;
+    filter: drop-shadow(0 0 15px rgba(35, 255, 218, 0.6));
+    transition: all 0.3s ease;
+    transform: translateZ(20px);
+}
+
+.sacga-hextris #restartBtn:hover {
+    filter: drop-shadow(0 0 25px rgba(35, 255, 218, 0.9));
+    transform: translateZ(30px) scale(1.1);
 }
 
 .sacga-hextris #startBtn {
@@ -254,10 +285,30 @@
 
 .sacga-hextris #currentHighScore {
     color: #f7f8ff;
-    text-shadow: 0 0 10px rgba(255, 0, 199, 0.55), 0 0 18px rgba(35, 255, 218, 0.45);
+    text-shadow:
+        0 0 10px rgba(255, 0, 199, 0.55),
+        0 0 18px rgba(35, 255, 218, 0.45),
+        0 0 30px rgba(123, 46, 255, 0.3);
     width: 100%;
     margin-top: -5px;
     font-size: 2em;
+    transform: translateZ(40px);
+    animation: scoreGlow 2s ease-in-out infinite;
+}
+
+@keyframes scoreGlow {
+    0%, 100% {
+        text-shadow:
+            0 0 10px rgba(255, 0, 199, 0.55),
+            0 0 18px rgba(35, 255, 218, 0.45),
+            0 0 30px rgba(123, 46, 255, 0.3);
+    }
+    50% {
+        text-shadow:
+            0 0 20px rgba(255, 0, 199, 0.75),
+            0 0 30px rgba(35, 255, 218, 0.65),
+            0 0 50px rgba(123, 46, 255, 0.5);
+    }
 }
 
 @media only screen and (max-device-width: 480px) {
@@ -409,8 +460,11 @@
     background-color: #0a0c18;
     background-image:
         radial-gradient(circle at 50% 20%, rgba(35, 255, 218, 0.2), transparent 45%),
-        radial-gradient(circle at 20% 80%, rgba(255, 0, 199, 0.16), transparent 50%);
+        radial-gradient(circle at 20% 80%, rgba(255, 0, 199, 0.16), transparent 50%),
+        radial-gradient(circle at 80% 60%, rgba(123, 46, 255, 0.12), transparent 40%);
     z-index: 0;
+    box-shadow: inset 0 0 100px rgba(35, 255, 218, 0.1);
+    transform: translateZ(10px);
 }
 
 .sacga-hextris #gameoverscreen {
@@ -483,7 +537,12 @@
 .sacga-hextris .GOTitle {
     font-weight: bold;
     font-size: 24.2000px;
-    text-shadow: 0 0 8px rgba(255, 0, 199, 0.7);
+    text-shadow:
+        0 0 8px rgba(255, 0, 199, 0.7),
+        0 0 16px rgba(35, 255, 218, 0.5),
+        0 0 24px rgba(123, 46, 255, 0.4);
+    transform: translateZ(30px);
+    letter-spacing: 2px;
 }
 
 .sacga-hextris .scoreNum {
@@ -495,7 +554,15 @@
     font-weight: light;
     margin-bottom: 5px;
     margin-top: -10px;
-    text-shadow: 0 0 16px rgba(35, 255, 218, 0.5);
+    text-shadow:
+        0 0 16px rgba(35, 255, 218, 0.5),
+        0 0 32px rgba(255, 0, 199, 0.4),
+        0 0 48px rgba(123, 46, 255, 0.3);
+    transform: translateZ(40px);
+    background: linear-gradient(135deg, #23ffda, #ff00c7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .sacga-hextris #highScoresTitle {
@@ -549,4 +616,95 @@
 .sacga-hextris .faded {
     opacity: 0;
     pointer-events: none;
+}
+
+/* Cyberpunk 3D enhancements */
+.sacga-hextris::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(35, 255, 218, 0.03) 0px,
+            rgba(35, 255, 218, 0.03) 1px,
+            transparent 1px,
+            transparent 2px
+        );
+    pointer-events: none;
+    z-index: 9999;
+    animation: scanlines 8s linear infinite;
+}
+
+@keyframes scanlines {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(10px);
+    }
+}
+
+.sacga-hextris::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        linear-gradient(90deg, transparent 49.5%, rgba(35, 255, 218, 0.05) 49.5%, rgba(35, 255, 218, 0.05) 50.5%, transparent 50.5%),
+        linear-gradient(0deg, transparent 49.5%, rgba(255, 0, 199, 0.05) 49.5%, rgba(255, 0, 199, 0.05) 50.5%, transparent 50.5%);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.3;
+}
+
+/* Enhanced container 3D effect */
+.sacga-hextris #container {
+    transform-style: preserve-3d;
+}
+
+.sacga-hextris #restart,
+.sacga-hextris #socialShare {
+    transition: all 0.3s ease;
+    transform: translateZ(25px);
+    cursor: pointer;
+}
+
+.sacga-hextris #restart:hover {
+    transform: translateZ(35px) scale(1.05);
+    filter: drop-shadow(0 0 20px rgba(35, 255, 218, 0.7));
+}
+
+.sacga-hextris #socialShare:hover {
+    transform: translateZ(35px) scale(1.05);
+}
+
+/* Glowing border animation */
+@keyframes borderGlow {
+    0%, 100% {
+        border-color: rgba(35, 255, 218, 0.4);
+        box-shadow:
+            0 0 30px rgba(35, 255, 218, 0.3),
+            0 0 60px rgba(255, 0, 199, 0.2),
+            inset 0 0 50px rgba(255, 0, 199, 0.15),
+            inset 0 0 100px rgba(35, 255, 218, 0.1);
+    }
+    50% {
+        border-color: rgba(255, 0, 199, 0.5);
+        box-shadow:
+            0 0 40px rgba(255, 0, 199, 0.4),
+            0 0 80px rgba(35, 255, 218, 0.3),
+            inset 0 0 60px rgba(35, 255, 218, 0.2),
+            inset 0 0 120px rgba(255, 0, 199, 0.15);
+    }
+}
+
+.sacga-hextris {
+    animation: borderGlow 4s ease-in-out infinite;
 }

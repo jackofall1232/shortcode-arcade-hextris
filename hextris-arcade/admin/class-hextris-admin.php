@@ -326,9 +326,10 @@ class Hextris_Admin {
                 'default' => true,
             ),
             'allow_anonymous_scores'    => array(
-                'label'   => __( 'Allow Anonymous Scores', 'hextris-arcade' ),
-                'type'    => 'checkbox',
-                'default' => true,
+                'label'       => __( 'Allow Guest Play (No Login Required)', 'hextris-arcade' ),
+                'type'        => 'checkbox',
+                'default'     => true,
+                'description' => __( 'Enable guest mode - players can enjoy the game without logging in', 'hextris-arcade' ),
             ),
         );
 

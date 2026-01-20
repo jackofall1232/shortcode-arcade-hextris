@@ -1,22 +1,52 @@
 /**
- * Hextris Arcade Admin Styles
+ * Hextris Arcade Admin Styles - Cyberpunk Edition
  */
+
+/* Global Variables */
+:root {
+    --cyberpunk-primary: #23ffda;
+    --cyberpunk-secondary: #ff00c7;
+    --cyberpunk-tertiary: #7b2eff;
+    --cyberpunk-bg-dark: #0a0c18;
+    --cyberpunk-bg-medium: #151827;
+    --cyberpunk-bg-light: #1e2235;
+    --cyberpunk-text: #e6f7ff;
+    --cyberpunk-text-dim: #8ddcff;
+}
 
 .hextris-admin-wrap {
     max-width: 1200px;
+    background: linear-gradient(135deg, var(--cyberpunk-bg-dark) 0%, var(--cyberpunk-bg-medium) 50%, var(--cyberpunk-bg-dark) 100%);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow:
+        0 0 40px rgba(35, 255, 218, 0.15),
+        0 0 80px rgba(255, 0, 199, 0.1),
+        inset 0 0 60px rgba(123, 46, 255, 0.05);
+    border: 1px solid rgba(35, 255, 218, 0.3);
 }
 
 .hextris-admin-wrap h1 {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 28px;
-    margin-bottom: 20px;
+    gap: 15px;
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: var(--cyberpunk-text);
+    text-shadow:
+        0 0 10px rgba(35, 255, 218, 0.6),
+        0 0 20px rgba(255, 0, 199, 0.4);
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 .hextris-logo {
-    font-size: 36px;
-    color: #2c3e50;
+    font-size: 42px;
+    background: linear-gradient(135deg, var(--cyberpunk-primary), var(--cyberpunk-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 8px rgba(35, 255, 218, 0.5));
 }
 
 .hextris-admin-container {
@@ -28,10 +58,14 @@
 .hextris-admin-main {
     flex: 1;
     min-width: 500px;
-    background: #fff;
-    padding: 20px;
-    border: 1px solid #ccd0d4;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    background: rgba(30, 34, 53, 0.8);
+    padding: 25px;
+    border: 1px solid rgba(35, 255, 218, 0.25);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 0 40px rgba(35, 255, 218, 0.05);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
 }
 
 .hextris-admin-sidebar {
@@ -40,32 +74,62 @@
 }
 
 .hextris-card {
-    background: #fff;
-    padding: 15px 20px;
-    border: 1px solid #ccd0d4;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    background: linear-gradient(135deg, rgba(30, 34, 53, 0.9), rgba(21, 24, 39, 0.9));
+    padding: 20px 25px;
+    border: 1px solid rgba(35, 255, 218, 0.25);
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.3),
+        inset 0 0 30px rgba(255, 0, 199, 0.05);
     margin-bottom: 20px;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hextris-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cyberpunk-primary), transparent);
+    opacity: 0.6;
 }
 
 .hextris-card h3 {
     margin-top: 0;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
-    color: #2c3e50;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(35, 255, 218, 0.2);
+    color: var(--cyberpunk-primary);
+    text-shadow: 0 0 8px rgba(35, 255, 218, 0.4);
+    font-size: 18px;
+    font-weight: 600;
 }
 
 .hextris-card h4 {
     margin: 15px 0 10px;
-    color: #666;
+    color: var(--cyberpunk-text-dim);
+    text-shadow: 0 0 5px rgba(141, 220, 255, 0.3);
+}
+
+.hextris-card p,
+.hextris-card li {
+    color: var(--cyberpunk-text);
 }
 
 .hextris-card code {
     display: block;
-    background: #f5f5f5;
-    padding: 10px;
+    background: rgba(10, 12, 24, 0.6);
+    border: 1px solid rgba(35, 255, 218, 0.3);
+    padding: 12px;
     margin: 10px 0;
     font-size: 13px;
     overflow-x: auto;
+    color: var(--cyberpunk-primary);
+    text-shadow: 0 0 5px rgba(35, 255, 218, 0.3);
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
 }
 
 .hextris-shortcode-examples {
@@ -75,13 +139,13 @@
 }
 
 .hextris-shortcode-examples li {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .hextris-shortcode-examples code {
     display: inline-block;
     margin: 0;
-    padding: 5px 8px;
+    padding: 6px 10px;
     font-size: 12px;
 }
 
@@ -91,34 +155,63 @@
 }
 
 .hextris-card ul:not(.hextris-shortcode-examples) li {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
 .hextris-card-info {
-    background: #f0f6fc;
-    border-color: #c8d7e1;
+    background: linear-gradient(135deg, rgba(35, 255, 218, 0.1), rgba(123, 46, 255, 0.1));
+    border-color: rgba(35, 255, 218, 0.4);
 }
 
 .hextris-card .button {
-    margin-top: 10px;
+    margin-top: 12px;
+    background: linear-gradient(135deg, rgba(35, 255, 218, 0.2), rgba(255, 0, 199, 0.2));
+    border: 1px solid var(--cyberpunk-primary);
+    color: var(--cyberpunk-text);
+    text-shadow: 0 0 5px rgba(35, 255, 218, 0.5);
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.hextris-card .button:hover {
+    background: linear-gradient(135deg, rgba(35, 255, 218, 0.3), rgba(255, 0, 199, 0.3));
+    box-shadow: 0 0 15px rgba(35, 255, 218, 0.4);
+    transform: translateY(-2px);
 }
 
 /* Settings Table Styles */
 .hextris-admin-main .form-table th {
     width: 200px;
-    padding: 15px 10px 15px 0;
+    padding: 18px 10px 18px 0;
+    color: var(--cyberpunk-text-dim);
+    font-weight: 600;
 }
 
 .hextris-admin-main .form-table td {
-    padding: 15px 10px;
+    padding: 18px 10px;
 }
 
 .hextris-admin-main h2 {
-    font-size: 18px;
-    color: #2c3e50;
-    border-bottom: 2px solid #ecf0f1;
-    padding-bottom: 10px;
-    margin-top: 30px;
+    font-size: 20px;
+    color: var(--cyberpunk-primary);
+    border-bottom: 2px solid rgba(35, 255, 218, 0.3);
+    padding-bottom: 12px;
+    margin-top: 35px;
+    text-shadow: 0 0 10px rgba(35, 255, 218, 0.4);
+    position: relative;
+}
+
+.hextris-admin-main h2::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--cyberpunk-secondary), transparent);
 }
 
 .hextris-admin-main h2:first-of-type {
@@ -129,17 +222,68 @@
 input[type="range"] {
     width: 200px;
     vertical-align: middle;
+    -webkit-appearance: none;
+    background: rgba(35, 255, 218, 0.2);
+    height: 6px;
+    border-radius: 3px;
+    outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--cyberpunk-primary), var(--cyberpunk-secondary));
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(35, 255, 218, 0.6);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--cyberpunk-primary), var(--cyberpunk-secondary));
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(35, 255, 218, 0.6);
+    border: none;
 }
 
 .range-value {
     display: inline-block;
-    min-width: 40px;
+    min-width: 50px;
     text-align: center;
-    background: #f5f5f5;
-    padding: 3px 8px;
-    margin-left: 10px;
-    border-radius: 3px;
-    font-family: monospace;
+    background: rgba(35, 255, 218, 0.15);
+    color: var(--cyberpunk-primary);
+    padding: 5px 12px;
+    margin-left: 12px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    border: 1px solid rgba(35, 255, 218, 0.3);
+    box-shadow: inset 0 0 10px rgba(35, 255, 218, 0.1);
+}
+
+/* Text/Number Inputs */
+input[type="text"],
+input[type="number"],
+select {
+    background: rgba(10, 12, 24, 0.5);
+    border: 1px solid rgba(35, 255, 218, 0.3);
+    color: var(--cyberpunk-text);
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+    outline: none;
+    border-color: var(--cyberpunk-primary);
+    box-shadow: 0 0 15px rgba(35, 255, 218, 0.3);
+    background: rgba(10, 12, 24, 0.7);
 }
 
 /* Color Picker */
@@ -149,9 +293,11 @@ input[type="range"] {
 
 .wp-picker-container .wp-color-result.button {
     margin-right: 10px;
+    border: 2px solid var(--cyberpunk-primary);
+    box-shadow: 0 0 10px rgba(35, 255, 218, 0.3);
 }
 
-/* Custom Color Fields (shown only when custom theme selected) */
+/* Custom Color Fields */
 .custom-color-row {
     transition: opacity 0.3s ease;
 }
@@ -163,26 +309,60 @@ input[type="range"] {
 
 /* Number Input */
 input[type="number"] {
-    width: 80px;
+    width: 100px;
 }
 
 /* Checkbox styling */
 input[type="checkbox"] {
-    margin-right: 5px;
+    margin-right: 8px;
+    width: 18px;
+    height: 18px;
+    accent-color: var(--cyberpunk-primary);
+    cursor: pointer;
 }
 
 /* Description text */
 .description {
-    color: #666;
+    color: var(--cyberpunk-text-dim);
     font-style: italic;
-    margin-top: 5px;
+    margin-top: 6px;
+    font-size: 13px;
 }
 
 /* Submit button */
 .hextris-admin-main .submit {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(35, 255, 218, 0.2);
+}
+
+.hextris-admin-main .submit .button-primary {
+    background: linear-gradient(135deg, var(--cyberpunk-primary), var(--cyberpunk-secondary));
+    border: none;
+    color: var(--cyberpunk-bg-dark);
+    text-shadow: none;
+    padding: 10px 24px;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(35, 255, 218, 0.3);
+}
+
+.hextris-admin-main .submit .button-primary:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 6px 25px rgba(35, 255, 218, 0.5),
+        0 0 30px rgba(255, 0, 199, 0.3);
+}
+
+/* Notices */
+.notice {
+    border-left-color: var(--cyberpunk-primary);
+    background: rgba(35, 255, 218, 0.1);
+    border: 1px solid rgba(35, 255, 218, 0.3);
+    color: var(--cyberpunk-text);
 }
 
 /* Responsive */
@@ -205,10 +385,32 @@ input[type="checkbox"] {
     .hextris-admin-main .form-table td {
         display: block;
         width: 100%;
-        padding: 10px 0;
+        padding: 12px 0;
     }
 
     .hextris-admin-main .form-table th {
-        padding-bottom: 5px;
+        padding-bottom: 8px;
     }
+
+    input[type="range"] {
+        width: 100%;
+    }
+}
+
+/* Animated gradient background effect */
+@keyframes cyberpunk-glow {
+    0%, 100% {
+        box-shadow:
+            0 0 40px rgba(35, 255, 218, 0.15),
+            0 0 80px rgba(255, 0, 199, 0.1);
+    }
+    50% {
+        box-shadow:
+            0 0 50px rgba(35, 255, 218, 0.2),
+            0 0 100px rgba(255, 0, 199, 0.15);
+    }
+}
+
+.hextris-admin-wrap {
+    animation: cyberpunk-glow 4s ease-in-out infinite;
 }
