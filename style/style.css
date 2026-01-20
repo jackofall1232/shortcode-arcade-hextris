@@ -537,44 +537,25 @@
    Remove .cyberpunk class to disable all effects
    ========================================================================== */
 
-/* Cyberpunk mode - dark background with neon accents */
+/* Cyberpunk mode - purple neon theme */
 .sacga-hextris.cyberpunk {
-    background-color: #0a0a0f;
-    border: 2px solid #00fff2;
+    background-color: #1a0a2e;
+    border: 2px solid #a855f7;
     box-shadow:
-        0 0 10px #00fff2,
-        0 0 20px rgba(0, 255, 242, 0.5),
-        0 0 40px rgba(0, 255, 242, 0.2),
-        inset 0 0 30px rgba(0, 255, 242, 0.1);
+        0 0 10px #a855f7,
+        0 0 20px rgba(168, 85, 247, 0.5),
+        0 0 40px rgba(168, 85, 247, 0.2),
+        inset 0 0 30px rgba(168, 85, 247, 0.1);
     animation: cyberpunk-frame-pulse 6s ease-in-out infinite;
 }
 
 /* Neon glow effect on canvas - applies to all rendered shapes */
 .sacga-hextris.cyberpunk #canvas {
-    background-color: #0a0a0f;
+    background-color: #1a0a2e;
     filter:
-        drop-shadow(0 0 2px #ff00ff)
-        drop-shadow(0 0 4px #00fff2)
-        drop-shadow(0 0 8px rgba(255, 0, 255, 0.4));
-}
-
-/* Scanline overlay - CRT effect */
-.sacga-hextris.cyberpunk::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0, 0, 0, 0.15) 2px,
-        rgba(0, 0, 0, 0.15) 4px
-    );
-    pointer-events: none;
-    z-index: 9999;
+        drop-shadow(0 0 2px #e879f9)
+        drop-shadow(0 0 4px #a855f7)
+        drop-shadow(0 0 8px rgba(232, 121, 249, 0.4));
 }
 
 /* Subtle vignette effect */
@@ -587,8 +568,8 @@
     bottom: 0;
     background: radial-gradient(
         ellipse at center,
-        transparent 50%,
-        rgba(0, 0, 0, 0.4) 100%
+        transparent 60%,
+        rgba(26, 10, 46, 0.5) 100%
     );
     pointer-events: none;
     z-index: 9998;
@@ -598,74 +579,74 @@
 @keyframes cyberpunk-frame-pulse {
     0%, 100% {
         box-shadow:
-            0 0 10px #00fff2,
-            0 0 20px rgba(0, 255, 242, 0.5),
-            0 0 40px rgba(0, 255, 242, 0.2),
-            inset 0 0 30px rgba(0, 255, 242, 0.1);
+            0 0 10px #a855f7,
+            0 0 20px rgba(168, 85, 247, 0.5),
+            0 0 40px rgba(168, 85, 247, 0.2),
+            inset 0 0 30px rgba(168, 85, 247, 0.1);
     }
     50% {
         box-shadow:
-            0 0 15px #ff00ff,
-            0 0 30px rgba(255, 0, 255, 0.5),
-            0 0 50px rgba(255, 0, 255, 0.2),
-            inset 0 0 40px rgba(255, 0, 255, 0.1);
+            0 0 15px #e879f9,
+            0 0 30px rgba(232, 121, 249, 0.5),
+            0 0 50px rgba(232, 121, 249, 0.2),
+            inset 0 0 40px rgba(232, 121, 249, 0.1);
     }
 }
 
 /* Cyberpunk text styling - high score and UI elements */
 .sacga-hextris.cyberpunk #highScoreInGameTextHeader {
-    color: #00fff2;
-    text-shadow: 0 0 10px #00fff2;
+    color: #c084fc;
+    text-shadow: 0 0 10px #c084fc;
 }
 
 .sacga-hextris.cyberpunk #currentHighScore {
-    color: #ff00ff;
-    text-shadow: 0 0 10px #ff00ff, 0 0 20px rgba(255, 0, 255, 0.5);
+    color: #e879f9;
+    text-shadow: 0 0 10px #e879f9, 0 0 20px rgba(232, 121, 249, 0.5);
 }
 
 /* Game over screen styling */
 .sacga-hextris.cyberpunk #container {
-    color: #00fff2;
-    text-shadow: 0 0 5px #00fff2;
+    color: #c084fc;
+    text-shadow: 0 0 5px #c084fc;
 }
 
 .sacga-hextris.cyberpunk .GOTitle {
-    color: #ff00ff;
-    text-shadow: 0 0 10px #ff00ff;
+    color: #e879f9;
+    text-shadow: 0 0 10px #e879f9;
 }
 
 .sacga-hextris.cyberpunk #cScore {
-    color: #00fff2;
-    text-shadow: 0 0 15px #00fff2, 0 0 30px rgba(0, 255, 242, 0.5);
+    color: #c084fc;
+    text-shadow: 0 0 15px #c084fc, 0 0 30px rgba(192, 132, 252, 0.5);
 }
 
 .sacga-hextris.cyberpunk .score {
-    color: #e0e0e0;
+    color: #e0d4f5;
 }
 
 /* Help screen styling */
 .sacga-hextris.cyberpunk #helpScreen {
-    background-color: rgba(10, 10, 15, 0.95);
-    color: #00fff2;
+    background-color: rgba(26, 10, 46, 0.95);
+    color: #c084fc;
 }
 
 .sacga-hextris.cyberpunk #inst_main_body {
-    color: #e0e0e0;
+    color: #e0d4f5;
 }
 
 .sacga-hextris.cyberpunk #instructions_head {
-    color: #ff00ff;
-    text-shadow: 0 0 10px #ff00ff;
+    color: #e879f9;
+    text-shadow: 0 0 10px #e879f9;
 }
 
 /* Button styling for cyberpunk mode */
 .sacga-hextris.cyberpunk #openSideBar,
 .sacga-hextris.cyberpunk #pauseBtn,
 .sacga-hextris.cyberpunk #restartBtn {
-    filter: brightness(0) invert(1) drop-shadow(0 0 3px #00fff2);
+    filter: brightness(0) invert(1) drop-shadow(0 0 3px #a855f7);
 }
 
 .sacga-hextris.cyberpunk #restart {
-    filter: brightness(0) invert(1) drop-shadow(0 0 5px #ff00ff);
+    filter: brightness(0) invert(1) drop-shadow(0 0 5px #e879f9);
 }
 
