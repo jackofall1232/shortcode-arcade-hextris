@@ -50,9 +50,6 @@ class Hextris_Shortcode {
         // Generate unique ID for this instance
         $unique_id = 'hextris-' . wp_rand( 1000, 9999 ) . '-' . time();
 
-        // Enqueue the game scripts and styles
-        $this->enqueue_game_assets();
-
         // Get theme colors
         $colors = $this->get_theme_colors( $theme, $settings );
 
@@ -90,21 +87,6 @@ class Hextris_Shortcode {
 
         // Apply filter for output
         return apply_filters( 'hextris_shortcode_output', $output, $atts );
-    }
-
-    /**
-     * Enqueue the game assets.
-     */
-    private function enqueue_game_assets() {
-        // Enqueue styles
-        wp_enqueue_style( 'hextris-public' );
-        wp_enqueue_style( 'hextris-responsive' );
-
-        // Enqueue scripts
-        wp_enqueue_script( 'hextris-hammer' );
-        wp_enqueue_script( 'hextris-keypress' );
-        wp_enqueue_script( 'hextris-game' );
-        wp_enqueue_script( 'hextris-wp-bridge' );
     }
 
     /**

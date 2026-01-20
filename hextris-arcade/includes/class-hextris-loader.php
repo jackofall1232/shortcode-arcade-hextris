@@ -79,6 +79,7 @@ class Hextris_Loader {
 
         $this->add_action( 'wp_enqueue_scripts', $plugin_public, 'register_styles' );
         $this->add_action( 'wp_enqueue_scripts', $plugin_public, 'register_scripts' );
+        $this->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_assets_for_shortcode', 20 );
     }
 
     /**

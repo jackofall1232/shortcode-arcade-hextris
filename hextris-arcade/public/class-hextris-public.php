@@ -48,13 +48,6 @@ class Hextris_Public {
             $this->version,
             'all'
         );
-
-        // Conditionally load if scripts should load globally
-        $settings = get_option( 'hextris_settings', array() );
-        if ( isset( $settings['load_scripts_globally'] ) && $settings['load_scripts_globally'] ) {
-            wp_enqueue_style( 'hextris-public' );
-            wp_enqueue_style( 'hextris-responsive' );
-        }
     }
 
     /**
@@ -98,11 +91,28 @@ class Hextris_Public {
             $this->version,
             true
         );
+    }
 
-        // Conditionally load if scripts should load globally
-        if ( isset( $settings['load_scripts_globally'] ) && $settings['load_scripts_globally'] ) {
-            $this->enqueue_game_scripts();
+    /**
+     * Enqueue game assets when the shortcode is present.
+     */
+    public function enqueue_assets_for_shortcode() {
+        if ( ! is_singular() ) {
+            return;
         }
+
+        $post = get_post();
+        if ( ! $post instanceof WP_Post ) {
+            return;
+        }
+
+        if ( ! has_shortcode( $post->post_content, 'hextris' ) ) {
+            return;
+        }
+
+        wp_enqueue_style( 'hextris-public' );
+        wp_enqueue_style( 'hextris-responsive' );
+        $this->enqueue_game_scripts();
     }
 
     /**
