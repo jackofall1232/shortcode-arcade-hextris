@@ -1,11 +1,15 @@
 function scaleCanvas() {
-	var $container = $(canvas).closest('.sacga-hextris');
-	if ($container.length && $container.width() > 0 && $container.height() > 0) {
-		canvas.width = $container.width();
-		canvas.height = $container.height();
+	var $canvas = $('#canvas');
+	var $container = $canvas.closest('.sacga-hextris');
+	var containerWidth = $container.length ? $container.width() : 0;
+	var containerHeight = $container.length ? $container.height() : 0;
+
+	if (containerWidth > 0 && containerHeight > 0) {
+		canvas.width = containerWidth;
+		canvas.height = containerHeight;
 	} else {
-		canvas.width = $(window).width();
-		canvas.height = $(window).height();
+		canvas.width = $(window).width() || 800;
+		canvas.height = $(window).height() || 600;
 	}
 
 	if (canvas.height > canvas.width) {
@@ -14,25 +18,30 @@ function scaleCanvas() {
 		settings.scale = (canvas.height / 800) * settings.baseScale;
 	}
 
+	if (settings.scale <= 0) {
+		settings.scale = settings.baseScale;
+	}
+
 	trueCanvas = {
 		width: canvas.width,
 		height: canvas.height
 	};
 
 	if (window.devicePixelRatio) {
-		var cw = $("#canvas").attr('width');
-		var ch = $("#canvas").attr('height');
+		var cw = $canvas.attr('width');
+		var ch = $canvas.attr('height');
 
-		$("#canvas").attr('width', cw * window.devicePixelRatio);
-		$("#canvas").attr('height', ch * window.devicePixelRatio);
-		$("#canvas").css('width', cw);
-		$("#canvas").css('height', ch);
+		$canvas.attr('width', cw * window.devicePixelRatio);
+		$canvas.attr('height', ch * window.devicePixelRatio);
+		$canvas.css('width', cw);
+		$canvas.css('height', ch);
 
 		trueCanvas = {
 			width: cw,
 			height: ch
 		};
 
+		ctx.setTransform(1, 0, 0, 1, 0, 0);
 		ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
 	}
     setBottomContainer();

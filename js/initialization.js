@@ -1,8 +1,16 @@
-$(window).on('load', function() {
-	setTimeout(function() {
-		initialize();
-	}, 0);
-});
+(function() {
+	function initWhenReady() {
+		setTimeout(function() {
+			initialize();
+		}, 0);
+	}
+
+	if (document.readyState === 'complete') {
+		initWhenReady();
+	} else {
+		$(window).on('load', initWhenReady);
+	}
+})();
 function initialize(a) {
 	window.rush = 1;
 	window.lastTime = Date.now();
