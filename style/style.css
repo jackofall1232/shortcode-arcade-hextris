@@ -639,14 +639,11 @@
     text-shadow: 0 0 10px #e879f9;
 }
 
-/* Button styling for cyberpunk mode */
+/* Button styling for cyberpunk mode - subtle glow only, preserve original icons */
 .sacga-hextris.cyberpunk #openSideBar,
 .sacga-hextris.cyberpunk #pauseBtn,
-.sacga-hextris.cyberpunk #restartBtn {
-    filter: brightness(0) invert(1) drop-shadow(0 0 3px #a855f7);
-}
-
+.sacga-hextris.cyberpunk #restartBtn,
 .sacga-hextris.cyberpunk #restart {
-    filter: brightness(0) invert(1) drop-shadow(0 0 5px #e879f9);
+    filter: drop-shadow(0 0 4px rgba(168, 85, 247, 0.6));
 }
 
